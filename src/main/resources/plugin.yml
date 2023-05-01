@@ -1,0 +1,9 @@
+name: SemiHardcorePlugin
+version: '${project.version}'
+main: plugin.semihardcoreplugin.SemiHardcorePlugin
+api-version: 1.19
+commands:
+  withdrawheart:
+    description: Withdraw hearts
+    usage: /withdrawheart <number of hearts>
+    aliases: [withdraw]
