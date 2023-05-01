@@ -2,6 +2,7 @@ package plugin.semihardcoreplugin.Commands;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
@@ -35,15 +36,9 @@ public class WithdrawHearts implements CommandExecutor, TabCompleter {
     public boolean onCommand(@NotNull CommandSender sender, Command command, @NotNull String label, String[] args) {
         //Making the command
         if (command.getName().equalsIgnoreCase("withdrawheart")) {
-            if (!(sender instanceof Player)) {
-                sender.sendMessage("This command can only be run by a player.");
-                return true;
-            }
-
-            if (args.length != 1) {
-                sender.sendMessage("Usage: /withdrawheart <number of hearts>");
-                return true;
-            }
+            //Checking the command
+            if (!(sender instanceof Player)) { sender.sendMessage("This command can only be run by a player."); return true; }
+            if (args.length != 1) { sender.sendMessage("Usage: /withdrawheart <number of hearts>"); return true; }
 
             //Command variables
             Player player = (Player) sender;
@@ -51,15 +46,8 @@ public class WithdrawHearts implements CommandExecutor, TabCompleter {
             AttributeInstance maxHealth = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
             int numHearts = 0;
             try { numHearts = Integer.parseInt(args[0]);
-            } catch (NumberFormatException e) {
-                sender.sendMessage("Please enter a valid number.");
-                return true;
-            }
-
-            if (numHearts <= 0) {
-                sender.sendMessage("Please enter a number greater than 0.");
-                return true;
-            }
+            } catch (NumberFormatException e) { sender.sendMessage("Please enter a valid number."); return true; }
+            if (numHearts <= 0) { sender.sendMessage("Please enter a number greater than 0."); return true; }
 
             //Getting the custom item
             ItemStack result = new ItemStack(Material.NETHER_STAR);
@@ -75,8 +63,10 @@ public class WithdrawHearts implements CommandExecutor, TabCompleter {
                 double newValue = maxHealth.getBaseValue() - (numHearts*2);
                 maxHealth.setBaseValue(newValue);
                 player.setHealth(newValue);
-                player.getInventory().addItem(result);
+                if (player.getInventory().firstEmpty() == -1) player.getWorld().dropItemNaturally(player.getLocation(), result);
+                else player.getInventory().addItem(result);
                 player.sendTitle(ChatColor.RED + "-" + numHearts + " Heart/s", playerName, 10, 60, 10);
+                player.spawnParticle(Particle.HEART, player.getLocation(), 30);
                 player.playSound(player.getLocation(), Sound.ENTITY_ENDER_DRAGON_HURT, 1f, 1f);
                 return true;
             } else {

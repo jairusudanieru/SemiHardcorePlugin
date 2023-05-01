@@ -37,7 +37,16 @@ public class PlayerHeartEvents implements Listener {
             player.setGameMode(GameMode.SPECTATOR);
             player.getWorld().strikeLightningEffect(player.getLocation());
             player.sendTitle(ChatColor.RED + "ELIMINATED!", playerName, 10, 60, 10);
+            player.spawnParticle(Particle.WHITE_ASH, player.getLocation(), 30);
             player.playSound(player.getLocation(), Sound.ENTITY_ENDER_DRAGON_HURT, 1f, 1f);
+
+            //Check if player has items in inventory and drop them
+            for (ItemStack item : player.getInventory().getContents()) {
+                if (item != null && !item.getType().equals(Material.AIR)) {
+                    player.getWorld().dropItemNaturally(player.getLocation(), item);
+                }
+            }
+            player.getInventory().clear();
         }
     }
 
@@ -54,8 +63,11 @@ public class PlayerHeartEvents implements Listener {
             maxHealth.setBaseValue(newValue);
             player.setHealth(newValue);
             player.sendTitle(ChatColor.RED + "-1 Heart", playerName, 10, 60, 10);
-            player.playSound(player.getLocation(), Sound.ENTITY_ENDER_DRAGON_HURT, 1f, 1f);
-            Bukkit.getScheduler().runTaskLater(plugin, () -> player.setGameMode(GameMode.SURVIVAL), 1L);
+            Bukkit.getScheduler().runTaskLater(plugin, () -> {
+                player.setGameMode(GameMode.SURVIVAL);
+                player.spawnParticle(Particle.TOTEM, player.getLocation(), 30);
+                player.playSound(player.getLocation(), Sound.ITEM_TOTEM_USE, 1f, 1f);
+                }, 1L);
         } else {
             maxHealth.setBaseValue(20);
             player.setHealth(20);
@@ -84,6 +96,7 @@ public class PlayerHeartEvents implements Listener {
                     maxHealth.setBaseValue(newValue);
                     player.setHealth(newValue);
                     player.getInventory().getItemInMainHand().setAmount(player.getInventory().getItemInMainHand().getAmount() - 1);
+                    player.spawnParticle(Particle.HEART, player.getLocation(), 30);
                     player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1f, 1f);
                     player.sendTitle(ChatColor.GREEN + "+1 Heart", playerName, 10, 60, 10);
                 } else {

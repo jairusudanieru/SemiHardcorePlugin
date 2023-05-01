@@ -2,18 +2,35 @@ package plugin.semihardcoreplugin;
 
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
+import plugin.semihardcoreplugin.Commands.RevivePlayer;
 import plugin.semihardcoreplugin.Commands.WithdrawHearts;
 import plugin.semihardcoreplugin.Events.PlayerHeartEvents;
 import plugin.semihardcoreplugin.Recipes.HeartRecipe;
 
 public final class SemiHardcorePlugin extends JavaPlugin {
 
+    //The events to register
+    public void registerEvents() {
+        getServer().getPluginManager().registerEvents(new PlayerHeartEvents(this), this);
+    }
+
+    //The commands to register
+    public void registerCommands() {
+        getCommand("withdrawheart").setExecutor(new WithdrawHearts());
+        getCommand("reviveplayer").setExecutor(new RevivePlayer());
+    }
+
+    //The recipes to register
+    public void registerRecipes() {
+        HeartRecipe.registerRecipe(this);
+    }
+
     @Override
     public void onEnable() {
         // Plugin startup logic
-        getServer().getPluginManager().registerEvents(new PlayerHeartEvents(this), this);
-        getCommand("withdrawheart").setExecutor(new WithdrawHearts());
-        HeartRecipe.registerRecipe(this);
+        registerEvents();
+        registerCommands();
+        registerRecipes();
         Bukkit.getLogger().info("SemiHardcore Plugin has successfully enabled!");
     }
 
