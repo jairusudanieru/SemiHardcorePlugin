@@ -12,21 +12,23 @@ public class Revive implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
         //Checking if it's possible to use the command
-        boolean isConsole = sender instanceof ConsoleCommandSender;
         boolean isPlayer = sender instanceof Player;
         boolean isOperator = sender.isOp();
         if (!command.getName().equalsIgnoreCase("revive")) return false;
-        if (isConsole) {
+        if (!isPlayer) {
             Bukkit.getLogger().info("This command is for players only. Use the /reviveplayer command instead.");
             return true;
-        } else if (isPlayer && !isOperator) {
+        } else if (!isOperator) {
             sender.sendMessage(ChatColor.RED + "You don't have permission to use this command!");
             return true;
         }
 
         //If the args is not equal to 1
-        if (args.length != 1) {
+        if (args.length < 1) {
             sender.sendMessage(ChatColor.RED + "Please specify a player you want to revive!");
+            return true;
+        } else if (args.length > 1) {
+            sender.sendMessage("Usage: /revive <playername>");
             return true;
         }
 

@@ -91,7 +91,7 @@ public class PlayerHeartEvents implements Listener {
             if (action.isRightClick() && itemType.equals(Material.NETHER_STAR) && meta.hasEnchant(Enchantment.DURABILITY)) {
                 AttributeInstance maxHealth = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
                 //Checking if the player have less than 20 hearts, if the player does, it won't allow to add more
-                if (maxHealth != null && maxHealth.getBaseValue() != 40) {
+                if (maxHealth != null && maxHealth.getBaseValue() < 20) {
                     double newValue = maxHealth.getBaseValue() + 2;
                     maxHealth.setBaseValue(newValue);
                     player.setHealth(newValue);

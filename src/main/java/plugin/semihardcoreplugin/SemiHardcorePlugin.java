@@ -5,7 +5,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import plugin.semihardcoreplugin.Commands.Revive;
 import plugin.semihardcoreplugin.Commands.ReviveMe;
 import plugin.semihardcoreplugin.Commands.RevivePlayer;
-import plugin.semihardcoreplugin.Commands.WithdrawHearts;
+import plugin.semihardcoreplugin.Commands.Withdraw;
 import plugin.semihardcoreplugin.Events.PlayerHeartEvents;
 import plugin.semihardcoreplugin.Recipes.HeartRecipe;
 
@@ -18,10 +18,10 @@ public final class SemiHardcorePlugin extends JavaPlugin {
 
     //The commands to register
     public void registerCommands() {
-        getCommand("withdrawheart").setExecutor(new WithdrawHearts());
-        getCommand("reviveplayer").setExecutor(new RevivePlayer());
         getCommand("revive").setExecutor(new Revive());
         getCommand("reviveme").setExecutor(new ReviveMe());
+        getCommand("reviveplayer").setExecutor(new RevivePlayer());
+        getCommand("withdraw").setExecutor(new Withdraw());
     }
 
     //The recipes to register

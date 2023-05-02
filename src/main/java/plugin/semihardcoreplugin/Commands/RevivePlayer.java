@@ -23,9 +23,11 @@ public class RevivePlayer implements CommandExecutor {
         }
 
         //If the args is not equal to 1
-        if (args.length != 1) {
+        if (args.length < 1) {
             Bukkit.getLogger().info("Please specify a player you want to revive!");
             return true;
+        } else if (args.length > 1) {
+            Bukkit.getLogger().info("Usage: /reviveplayer <playername>");
         }
 
         //Checking if target is valid
@@ -36,7 +38,7 @@ public class RevivePlayer implements CommandExecutor {
             return true;
         }
 
-        // Attempt to revive the target player
+        //Checking if it's possible to revive the player!
         AttributeInstance maxHealth = target.getAttribute(Attribute.GENERIC_MAX_HEALTH);
         if (maxHealth != null && target.getGameMode().equals(GameMode.SPECTATOR) && maxHealth.getBaseValue() <= 2) {
             target.setGameMode(GameMode.SURVIVAL);

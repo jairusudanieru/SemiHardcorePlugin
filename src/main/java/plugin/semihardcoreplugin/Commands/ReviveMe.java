@@ -18,28 +18,28 @@ public class ReviveMe implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
         //Checking if it's possible to use the command
-        boolean isConsole = sender instanceof ConsoleCommandSender;
         boolean isPlayer = sender instanceof Player;
         if (!command.getName().equalsIgnoreCase("reviveme")) return false;
-        if (isConsole) {
+        if (!isPlayer) {
             Bukkit.getLogger().info("This command is for players only. Use the /reviveplayer command instead.");
             return true;
         }
 
-        //Checking if target is valid
-        Player target = null;
-        String targetName = null;
-        if (isPlayer) {
-            target = (Player) sender;
-            targetName = target.getName();
-        }
+        //If the args is more than 0
+        if (args.length > 0) { sender.sendMessage("Usage: /reviveme "); return true; }
 
-        //Checking if it's possible to revive the player!
+        //Player variables
+        Player target = (Player) sender;
+        String targetName = target.getName();
         World world = target.getWorld();
         UUID uuid = target.getUniqueId();
+
+        //File locations
         File advancementFile = new File(world.getWorldFolder(), "advancements/" + uuid + ".json");
         File playerDataFile = new File(world.getWorldFolder(), "playerdata/" + uuid + ".dat");
         File statsFile = new File(world.getWorldFolder(), "stats/" + uuid + ".json");
+
+        //Checking if it's possible to revive the player!
         AttributeInstance maxHealth = target.getAttribute(Attribute.GENERIC_MAX_HEALTH);
         if (maxHealth != null && target.getGameMode().equals(GameMode.SPECTATOR) && maxHealth.getBaseValue() <= 2) {
             target.kickPlayer(ChatColor.GREEN + "You have been successfully revived!" );
