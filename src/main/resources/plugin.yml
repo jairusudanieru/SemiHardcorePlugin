@@ -7,7 +7,17 @@ commands:
     description: Withdraw hearts
     usage: /withdrawheart <number of hearts>
     aliases: [withdraw]
+  revive:
+    description: Revive eliminated players (player)
+    usage: /revive <playername>
+    aliases: [rev]
+    permission: op
   reviveplayer:
-    description: Revive dead players
+    description: Revive eliminated players (console)
     usage: /reviveplayer <playername>
-    aliases: [ revive ]
+    aliases: [revplayer]
+    permission: op
+  reviveme:
+    description: Revive eliminated players (player itself)
+    usage: /reviveme <playername>
+    aliases: [ revme ]
