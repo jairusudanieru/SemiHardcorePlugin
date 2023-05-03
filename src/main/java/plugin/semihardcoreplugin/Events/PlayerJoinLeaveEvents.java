@@ -24,6 +24,7 @@ public class PlayerJoinLeaveEvents implements Listener {
         String newJoinMessage = plugin.getConfig().getString("welcomeMessage");
         String joinMessage = plugin.getConfig().getString("joinMessage");
 
+        //Setting the join message
         if (newJoinMessage != null) newJoinMessage = newJoinMessage.replace("%player%",playerName);
         if (joinMessage != null) joinMessage = joinMessage.replace("%player%",playerName);
         if (!player.hasPlayedBefore() && newJoinMessage != null) {
@@ -40,6 +41,7 @@ public class PlayerJoinLeaveEvents implements Listener {
         String playerName = player.getName();
         String leaveMessage = plugin.getConfig().getString("leaveMessage");
 
+        //Setting the quit message
         if (leaveMessage != null) leaveMessage = leaveMessage.replace("%player%",playerName);
         if (leaveMessage != null) event.setQuitMessage(ChatColor.YELLOW + leaveMessage);
     }

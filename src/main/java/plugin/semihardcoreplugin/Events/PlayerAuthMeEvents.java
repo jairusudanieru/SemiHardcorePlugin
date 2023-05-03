@@ -1,5 +1,6 @@
 package plugin.semihardcoreplugin.Events;
 
+import fr.xephi.authme.api.v3.AuthMeApi;
 import fr.xephi.authme.events.LoginEvent;
 import fr.xephi.authme.events.LogoutEvent;
 import org.bukkit.Bukkit;
@@ -21,6 +22,7 @@ public class PlayerAuthMeEvents implements Listener {
 
     @EventHandler
     public void onPlayerJoin(@NotNull PlayerJoinEvent event) {
+        //Setting the join message
         event.setJoinMessage(null);
     }
 
@@ -30,9 +32,11 @@ public class PlayerAuthMeEvents implements Listener {
         Player player = event.getPlayer();
         String playerName = player.getName();
         String leaveMessage = plugin.getConfig().getString("leaveMessage");
+        boolean isAuthed = AuthMeApi.getInstance().isAuthenticated(player);
 
+        //Setting the quit message
         if (leaveMessage != null) leaveMessage = leaveMessage.replace("%player%",playerName);
-        if (leaveMessage != null) event.setQuitMessage(ChatColor.YELLOW + leaveMessage);
+        if (leaveMessage != null && isAuthed) event.setQuitMessage(ChatColor.YELLOW + leaveMessage);
     }
 
     @EventHandler
@@ -43,6 +47,7 @@ public class PlayerAuthMeEvents implements Listener {
         String newJoinMessage = plugin.getConfig().getString("welcomeMessage");
         String joinMessage = plugin.getConfig().getString("joinMessage");
 
+        //Setting the logged in message
         if (newJoinMessage != null) newJoinMessage = newJoinMessage.replace("%player%",playerName);
         if (joinMessage != null) joinMessage = joinMessage.replace("%player%",playerName);
         if (!player.hasPlayedBefore() && newJoinMessage != null) {
@@ -59,6 +64,7 @@ public class PlayerAuthMeEvents implements Listener {
         String playerName = player.getName();
         String leaveMessage = plugin.getConfig().getString("joinMessage");
 
+        //Setting the logged out message
         if (leaveMessage != null) leaveMessage = leaveMessage.replace("%player%",playerName);
         if (leaveMessage != null) Bukkit.broadcastMessage(ChatColor.YELLOW + leaveMessage);
     }
