@@ -4,9 +4,16 @@ import org.bukkit.*;
 import org.bukkit.attribute.*;
 import org.bukkit.command.*;
 import org.bukkit.entity.*;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
 public class RevivePlayer implements CommandExecutor {
+
+    //Getting the plugin instance
+    private final JavaPlugin plugin;
+    public RevivePlayer(JavaPlugin plugin) {
+        this.plugin = plugin;
+    }
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, Command command, @NotNull String label, String[] args) {

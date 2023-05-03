@@ -1,0 +1,19 @@
+#SemiHardcore Plugin made by Jairusu#5237
+#This plugin is inspired by Zjaun plugin on his SemiHardcoreSMP
+
+#Configuration
+#Set this to "true" if you want to enable this plugin
+enablePlugin: false
+
+#Set this to the maximum hearts allowed a player could have
+#Minimum of 10 and maximum of 50, any more than 50 might crash the plugin
+maxHearts: 10
+
+#Player welcome and join/leave message
+#The welcome message is for new players
+#The join/leave message is for old players
+#Use the %player% to get the player name
+#Leave this to blank if you want to disable
+joinMessage: "%player% joined the Semi-Hardcore server"
+leaveMessage: "%player% left the Semi-Hardcore server"
+welcomeMessage: "Welcome to the Semi-Hardcore server %player%"

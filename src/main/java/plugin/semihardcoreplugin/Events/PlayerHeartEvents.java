@@ -13,14 +13,14 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
-import plugin.semihardcoreplugin.SemiHardcorePlugin;
 
 public class PlayerHeartEvents implements Listener {
 
     //Getting the plugin instance
-    SemiHardcorePlugin plugin;
-    public PlayerHeartEvents(SemiHardcorePlugin plugin){
+    private final JavaPlugin plugin;
+    public PlayerHeartEvents(JavaPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -38,7 +38,6 @@ public class PlayerHeartEvents implements Listener {
             player.getWorld().strikeLightningEffect(player.getLocation());
             player.sendTitle(ChatColor.RED + "ELIMINATED!", playerName, 10, 60, 10);
             player.spawnParticle(Particle.WHITE_ASH, player.getLocation(), 30);
-            player.playSound(player.getLocation(), Sound.ENTITY_ENDER_DRAGON_HURT, 1f, 1f);
 
             //Check if player has items in inventory and drop them
             for (ItemStack item : player.getInventory().getContents()) {
@@ -54,7 +53,7 @@ public class PlayerHeartEvents implements Listener {
     public void onPlayerRespawn(@NotNull PlayerRespawnEvent event) {
         //Event variables
         Player player = event.getPlayer();
-        String playerName = event.getPlayer().getName();
+        String playerName = player.getName();
         AttributeInstance maxHealth = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
 
         //Checking if the player have more than 1 heart, if not the player gets eliminated
@@ -66,7 +65,7 @@ public class PlayerHeartEvents implements Listener {
             Bukkit.getScheduler().runTaskLater(plugin, () -> {
                 player.setGameMode(GameMode.SURVIVAL);
                 player.spawnParticle(Particle.TOTEM, player.getLocation(), 30);
-                player.playSound(player.getLocation(), Sound.ITEM_TOTEM_USE, 1f, 1f);
+                player.playSound(player.getLocation(), Sound.ENTITY_WITHER_SPAWN, 1f, 1.5f);
                 }, 1L);
         } else {
             maxHealth.setBaseValue(20);
@@ -84,14 +83,17 @@ public class PlayerHeartEvents implements Listener {
         ItemStack item = event.getItem();
         Material itemType = player.getInventory().getItemInMainHand().getType();
         String playerName = event.getPlayer().getName();
+        int maxHeart = plugin.getConfig().getInt("maxHearts");
+        boolean actionType = action.isRightClick();
+        boolean itemRight = itemType.equals(Material.NETHER_STAR);
 
         //Checking if the item is not null and if the item is the correct item
         if (item != null) {
             meta = item.getItemMeta();
-            if (action.isRightClick() && itemType.equals(Material.NETHER_STAR) && meta.hasEnchant(Enchantment.DURABILITY)) {
+            if (actionType && itemRight && meta.hasEnchant(Enchantment.DURABILITY)) {
                 AttributeInstance maxHealth = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
                 //Checking if the player have less than 20 hearts, if the player does, it won't allow to add more
-                if (maxHealth != null && maxHealth.getBaseValue() < 20) {
+                if (maxHealth != null && maxHealth.getBaseValue() < (maxHeart*2)) {
                     double newValue = maxHealth.getBaseValue() + 2;
                     maxHealth.setBaseValue(newValue);
                     player.setHealth(newValue);

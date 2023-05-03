@@ -9,24 +9,38 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class Withdraw implements CommandExecutor, TabCompleter {
 
+    //Getting the plugin instance
+    private final JavaPlugin plugin;
+    public Withdraw(JavaPlugin plugin) {
+        this.plugin = plugin;
+    }
+
     @Override
     public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String alias, String[] args) {
+        //Checking if the args is 1, then show the array for tab completion
+        int maxHeart = plugin.getConfig().getInt("maxHearts");
         if (args.length == 1) {
-            return Arrays.asList("1", "2", "3", "4", "5", "6", "7", "8", "9");
+            List<String> list = new ArrayList<>();
+            for (int i = 1; i <= (maxHeart-1); i++) {
+                list.add(String.valueOf(i));
+            }
+            return list;
         } else {
             return Collections.emptyList();
         }
     }
 
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
+        //Checking if it's possible to use the command
         boolean isPlayer = sender instanceof Player;
         if (!command.getName().equalsIgnoreCase("withdraw")) return false;
         if (!isPlayer) {
@@ -64,13 +78,15 @@ public class Withdraw implements CommandExecutor, TabCompleter {
         meta.setDisplayName(ChatColor.RESET + "Player Heart");
         result.setItemMeta(meta);
 
-        //Checking if the inventory of the player is full
-        if (player.getInventory().firstEmpty() == -1) player.getWorld().dropItemNaturally(player.getLocation(), result);
-        else player.getInventory().addItem(result);
-
         //Checking if it's possible to withdraw hearts!
         AttributeInstance maxHealth = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
-        if (maxHealth != null && maxHealth.getBaseValue() > 2) {
+        double maxHealthValue = maxHealth.getBaseValue();
+        int maxHealthIntValue = (int) maxHealthValue;
+        if (maxHealthIntValue > 2 && (numHearts * 2) < maxHealthIntValue) {
+            //Checking if the inventory of the player is full
+            if (player.getInventory().firstEmpty() == -1) player.getWorld().dropItemNaturally(player.getLocation(), result);
+            else player.getInventory().addItem(result);
+
             //Setting the player new heart count
             double newValue = maxHealth.getBaseValue() - (numHearts * 2);
             maxHealth.setBaseValue(newValue);
