@@ -3,10 +3,7 @@ package plugin.semihardcoreplugin;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
-import plugin.semihardcoreplugin.Commands.Revive;
-import plugin.semihardcoreplugin.Commands.ReviveMe;
-import plugin.semihardcoreplugin.Commands.RevivePlayer;
-import plugin.semihardcoreplugin.Commands.Withdraw;
+import plugin.semihardcoreplugin.Commands.*;
 import plugin.semihardcoreplugin.Events.PlayerAuthMeEvents;
 import plugin.semihardcoreplugin.Events.PlayerHeartEvents;
 import plugin.semihardcoreplugin.Events.PlayerJoinLeaveEvents;
@@ -21,6 +18,7 @@ public final class SemiHardcorePlugin extends JavaPlugin {
 
     //The commands to register
     public void registerCommands() {
+        getCommand("respawn").setExecutor(new Respawn(this));
         getCommand("revive").setExecutor(new Revive(this));
         getCommand("reviveme").setExecutor(new ReviveMe(this));
         getCommand("reviveplayer").setExecutor(new RevivePlayer(this));

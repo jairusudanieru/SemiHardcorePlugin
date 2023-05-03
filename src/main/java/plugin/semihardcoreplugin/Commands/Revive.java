@@ -24,7 +24,6 @@ public class Revive implements CommandExecutor {
         if (!command.getName().equalsIgnoreCase("revive")) return false;
         if (!isPlayer) {
             Bukkit.getLogger().info("This command is for players only. Use the /reviveplayer command instead.");
-            return true;
         } else if (!isOperator) {
             sender.sendMessage(ChatColor.RED + "You don't have permission to use this command!");
             return true;
