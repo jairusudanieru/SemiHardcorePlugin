@@ -4,6 +4,8 @@
 #Set this to the maximum hearts allowed a player could have
 #Minimum of 10 and maximum of 50, any more than 50 might crash the plugin
 maxHearts: 10
+#The name of the heart item
+heartName: "Player Heart"
 
 #Player welcome and join/leave message
 #The welcome message is for new players
