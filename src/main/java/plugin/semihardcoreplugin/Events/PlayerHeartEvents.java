@@ -14,6 +14,8 @@ import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.jetbrains.annotations.NotNull;
 
 public class PlayerHeartEvents implements Listener {
@@ -55,6 +57,7 @@ public class PlayerHeartEvents implements Listener {
         Player player = event.getPlayer();
         String playerName = player.getName();
         AttributeInstance maxHealth = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
+        boolean safeRespawn = plugin.getConfig().getBoolean("safeRespawn");
 
         //Checking if the player have more than 1 heart, if not the player gets eliminated
         if (maxHealth != null && maxHealth.getBaseValue() > 2) {
@@ -66,6 +69,12 @@ public class PlayerHeartEvents implements Listener {
                 player.setGameMode(GameMode.SURVIVAL);
                 player.spawnParticle(Particle.TOTEM, player.getLocation(), 30);
                 player.playSound(player.getLocation(), Sound.ENTITY_WITHER_SPAWN, 1f, 1.5f);
+                if (safeRespawn) {
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION, 120, 16));
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 30, 5));
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 300, 0));
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 300, 0));
+                }
                 }, 1L);
         } else {
             maxHealth.setBaseValue(20);

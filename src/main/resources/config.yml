@@ -5,6 +5,10 @@
 #Minimum of 10 and maximum of 50, any more than 50 might crash the plugin
 maxHearts: 10
 
+#Set this to true to allow players to safely respawn
+#They will be given protection similar to eating an Enchanted Golden Apple
+safeRespawn: true
+
 #Player welcome and join/leave message
 #The welcome message is for new players
 #The join/leave message is for old players
