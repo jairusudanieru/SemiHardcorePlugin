@@ -8,4 +8,12 @@ plugins, so it's not perfect and there may still
 be issues. If you come across one, feel free to
 add me to Discord - Jairusu#5237.
 
-![semihardcore.png](images%2Fsemihardcore.png)
+![deathscreen.png](images%2Fdeathscreen.png)
+![removeheart.png](images%2Fremoveheart.png)
+![heartrecipe.png](images%2Fheartrecipe.png)
+![heartitem.png](images%2Fheartitem.png)
+![addheart.png](images%2Faddheart.png)
+![withdrawcommand.png](images%2Fwithdrawcommand.png)
+![withdrawhearts.png](images%2Fwithdrawhearts.png)
+![lastlifedeath.png](images%2Flastlifedeath.png)
+![afterlastlifedeath.png](images%2Fafterlastlifedeath.png)
