@@ -6,17 +6,6 @@ commands:
   withdraw:
     description: Withdraw hearts
     usage: /withdraw <number of hearts>
-  respawn:
-    description: Respawn eliminated players (player)
-    usage: /respawn
   revive:
     description: Revive eliminated players (player)
-    usage: /revive <playername>
-    permission: op
-  reviveplayer:
-    description: Revive eliminated players (console)
-    usage: /reviveplayer <playername>
-    permission: op
-  reviveme:
-    description: Revive eliminated players (player itself)
-    usage: /reviveme <playername>
+    usage: /revive

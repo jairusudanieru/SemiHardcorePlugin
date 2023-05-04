@@ -18,10 +18,7 @@ public final class SemiHardcorePlugin extends JavaPlugin {
 
     //The commands to register
     public void registerCommands() {
-        getCommand("respawn").setExecutor(new Respawn(this));
         getCommand("revive").setExecutor(new Revive(this));
-        getCommand("reviveme").setExecutor(new ReviveMe(this));
-        getCommand("reviveplayer").setExecutor(new RevivePlayer(this));
         getCommand("withdraw").setExecutor(new Withdraw(this));
     }
 

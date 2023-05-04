@@ -30,9 +30,7 @@ public class Withdraw implements CommandExecutor, TabCompleter {
         int maxHeart = plugin.getConfig().getInt("maxHearts");
         if (args.length == 1) {
             List<String> list = new ArrayList<>();
-            for (int i = 1; i <= (maxHeart-1); i++) {
-                list.add(String.valueOf(i));
-            }
+            for (int i = 1; i <= (maxHeart-1); i++) list.add(String.valueOf(i));
             return list;
         } else {
             return Collections.emptyList();
@@ -40,35 +38,29 @@ public class Withdraw implements CommandExecutor, TabCompleter {
     }
 
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
+        //Messages variables
+        String playerOnly = "This command is for players only!";
+        String specify = "§cPlease specify the number of hearts you want to withdraw!";
+        String usage = "Usage: /withdrawheart <number of hearts>";
+        String invalid = "§cPlease enter a valid number!";
+        String notZero = "§cPlease enter a number greater than 0!";
+        String noHearts = "§cYou don't have enough hearts to withdraw!";
+
         //Checking if it's possible to use the command
-        boolean isPlayer = sender instanceof Player;
         if (!command.getName().equalsIgnoreCase("withdraw")) return false;
-        if (!isPlayer) {
-            Bukkit.getLogger().info("This command is for players only!");
-            return true;
-        }
+        boolean isPlayer = sender instanceof Player;
+        if (!isPlayer) { Bukkit.getLogger().info(playerOnly); return true; }
 
         //If the args is not equal to 1
-        if (args.length < 1) {
-            sender.sendMessage(ChatColor.RED + "Please specify the number of hearts you want to withdraw!");
-            return true;
-        } else if (args.length > 1) {
-            sender.sendMessage("Usage: /withdrawheart <number of hearts> ");
-            return true;
-        }
+        if (args.length < 1) { sender.sendMessage(specify); return true; }
+        else if (args.length > 1) { sender.sendMessage(usage); return true; }
 
         //Getting the player command args
-        Player player = (Player) sender;
         int numHearts;
+        Player player = (Player) sender;
         try { numHearts = Integer.parseInt(args[0]);
-        } catch (NumberFormatException e) {
-            sender.sendMessage(ChatColor.RED + "Please enter a valid number!");
-            return true;
-        }
-        if (numHearts <= 0) {
-            sender.sendMessage(ChatColor.RED + "Please enter a number greater than 0!");
-            return true;
-        }
+        } catch (NumberFormatException e) { sender.sendMessage(invalid); return true; }
+        if (numHearts <= 0) { sender.sendMessage(notZero); return true; }
 
         //Getting the heart item
         ItemStack result = new ItemStack(Material.NETHER_STAR, numHearts);
@@ -80,11 +72,13 @@ public class Withdraw implements CommandExecutor, TabCompleter {
 
         //Checking if it's possible to withdraw hearts!
         AttributeInstance maxHealth = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
-        double maxHealthValue = maxHealth.getBaseValue();
+        Location playerLocation = player.getLocation();
+        World world = player.getWorld();
+        double maxHealthValue = maxHealth != null ? maxHealth.getBaseValue() : 0;
         int maxHealthIntValue = (int) maxHealthValue;
         if (maxHealthIntValue > 2 && (numHearts * 2) < maxHealthIntValue) {
             //Checking if the inventory of the player is full
-            if (player.getInventory().firstEmpty() == -1) player.getWorld().dropItemNaturally(player.getLocation(), result);
+            if (player.getInventory().firstEmpty() == -1) world.dropItemNaturally(playerLocation, result);
             else player.getInventory().addItem(result);
 
             //Setting the player new heart count
@@ -92,10 +86,10 @@ public class Withdraw implements CommandExecutor, TabCompleter {
             maxHealth.setBaseValue(newValue);
             player.setHealth(newValue);
             player.sendTitle(ChatColor.RED + "-" + numHearts + " Heart/s", player.getName(), 10, 60, 10);
-            player.spawnParticle(Particle.HEART, player.getLocation(), 30);
+            player.spawnParticle(Particle.HEART, playerLocation, 30);
             player.playSound(player.getLocation(), Sound.ENTITY_ENDER_DRAGON_HURT, 1f, 1f);
         } else {
-            sender.sendMessage(ChatColor.RED + "You don't have enough hearts to withdraw!");
+            sender.sendMessage(noHearts);
             return true;
         }
         return true;

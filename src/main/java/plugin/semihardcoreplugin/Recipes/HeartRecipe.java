@@ -14,17 +14,12 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class HeartRecipe {
 
     public static void registerRecipe(JavaPlugin plugin) {
-
-        //Getting the item name from the config.yml
-        String itemName = plugin.getConfig().getString("heartName");
-        if (itemName == null) itemName = "Player Heart";
-
         //Creating the custom item
         ItemStack result = new ItemStack(Material.NETHER_STAR);
         ItemMeta meta = result.getItemMeta();
         meta.addEnchant(Enchantment.DURABILITY, 5, true);
         meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-        meta.setDisplayName(ChatColor.RESET + itemName);
+        meta.setDisplayName(ChatColor.RESET + "Player Heart");
         result.setItemMeta(meta);
 
         //Creating the custom recipe for the item
