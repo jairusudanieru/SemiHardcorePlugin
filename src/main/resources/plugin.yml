@@ -9,7 +9,7 @@ commands:
   revive:
     description: Revive eliminated players
     usage: /revive | /revive <playername>
-  reload:
-    description: Reload the plugin's configuration
-    usage: /reload
-    permission: op
+  semihardcore:
+    description: Plugins basic commands
+    usage: /semihardcore (reload|info|creator)
+    aliases: [sh]
