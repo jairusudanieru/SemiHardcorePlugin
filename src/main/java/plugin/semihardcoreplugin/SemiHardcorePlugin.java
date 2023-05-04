@@ -12,16 +12,17 @@ import plugin.semihardcoreplugin.Recipes.HeartRecipe;
 
 public final class SemiHardcorePlugin extends JavaPlugin {
 
-    //The events to register
-    public void registerEvents() {
-        getServer().getPluginManager().registerEvents(new PlayerDeathRespawnEvent(this), this);
-        getServer().getPluginManager().registerEvents(new PlayerUseHeartsEvent(this), this);
-    }
-
     //The commands to register
     public void registerCommands() {
-        getCommand("revive").setExecutor(new Revive(this));
-        getCommand("withdraw").setExecutor(new Withdraw(this));
+        Bukkit.getPluginCommand("reload").setExecutor(new ReloadCommand(this));
+        Bukkit.getPluginCommand("revive").setExecutor(new ReviveCommand(this));
+        Bukkit.getPluginCommand("withdraw").setExecutor(new WithdrawCommand(this));
+    }
+
+    //The events to register
+    public void registerEvents() {
+        Bukkit.getPluginManager().registerEvents(new PlayerDeathRespawnEvent(this), this);
+        Bukkit.getPluginManager().registerEvents(new PlayerUseHeartsEvent(this), this);
     }
 
     //Checking if the plugin AuthMe is on the server
@@ -29,9 +30,9 @@ public final class SemiHardcorePlugin extends JavaPlugin {
         Plugin authMe = Bukkit.getServer().getPluginManager().getPlugin("AuthMe");
         if (authMe != null) {
             Bukkit.getLogger().info("[Semi-Hardcore] AuthMe plugin found!");
-            getServer().getPluginManager().registerEvents(new PlayerAuthMeEvent(this), this);
+            Bukkit.getPluginManager().registerEvents(new PlayerAuthMeEvent(this), this);
         } else {
-            getServer().getPluginManager().registerEvents(new PlayerJoinLeaveEvent(this), this);
+            Bukkit.getPluginManager().registerEvents(new PlayerJoinLeaveEvent(this), this);
         }
     }
 
@@ -44,8 +45,8 @@ public final class SemiHardcorePlugin extends JavaPlugin {
     public void onEnable() {
         // Plugin startup logic
         saveDefaultConfig();
-        registerEvents();
         registerCommands();
+        registerEvents();
         registerRecipes();
         checkAuthMe();
         Bukkit.getLogger().info("[Semi-Hardcore] Plugin has successfully enabled!");

@@ -7,5 +7,9 @@ commands:
     description: Withdraw hearts
     usage: /withdraw <number of hearts>
   revive:
-    description: Revive eliminated players (player)
-    usage: /revive
+    description: Revive eliminated players
+    usage: /revive | /revive <playername>
+  reload:
+    description: Reload the plugin's configuration
+    usage: /reload
+    permission: op

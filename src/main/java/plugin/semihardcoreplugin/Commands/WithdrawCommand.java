@@ -16,11 +16,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Withdraw implements CommandExecutor, TabCompleter {
+public class WithdrawCommand implements CommandExecutor, TabCompleter {
 
     //Getting the plugin instance
     private final JavaPlugin plugin;
-    public Withdraw(JavaPlugin plugin) {
+    public WithdrawCommand(JavaPlugin plugin) {
         this.plugin = plugin;
     }
 

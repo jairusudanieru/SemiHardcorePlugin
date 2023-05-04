@@ -14,11 +14,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
-public class Revive implements CommandExecutor, TabCompleter {
+public class ReviveCommand implements CommandExecutor, TabCompleter {
 
     //Getting the plugin instance
     private final JavaPlugin plugin;
-    public Revive(JavaPlugin plugin) {
+    public ReviveCommand(JavaPlugin plugin) {
         this.plugin = plugin;
     }
 
