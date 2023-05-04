@@ -70,10 +70,10 @@ public class PlayerHeartEvents implements Listener {
                 player.spawnParticle(Particle.TOTEM, player.getLocation(), 30);
                 player.playSound(player.getLocation(), Sound.ENTITY_WITHER_SPAWN, 1f, 1.5f);
                 if (safeRespawn) {
-                    player.addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION, 120, 16));
-                    player.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 30, 5));
-                    player.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 300, 0));
-                    player.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 300, 0));
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION, 2400, 3));
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 200, 1));
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 6000, 1));
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 6000, 1));
                 }
                 }, 1L);
         } else {
