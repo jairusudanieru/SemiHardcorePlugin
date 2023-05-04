@@ -9,10 +9,10 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
-public class PlayerJoinLeaveEvents implements Listener {
+public class PlayerJoinLeaveEvent implements Listener {
 
     private final JavaPlugin plugin;
-    public PlayerJoinLeaveEvents(JavaPlugin plugin) {
+    public PlayerJoinLeaveEvent(JavaPlugin plugin) {
         this.plugin = plugin;
     }
 

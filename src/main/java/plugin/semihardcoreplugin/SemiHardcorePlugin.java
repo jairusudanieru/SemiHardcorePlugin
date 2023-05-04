@@ -4,16 +4,18 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import plugin.semihardcoreplugin.Commands.*;
-import plugin.semihardcoreplugin.Events.PlayerAuthMeEvents;
-import plugin.semihardcoreplugin.Events.PlayerHeartEvents;
-import plugin.semihardcoreplugin.Events.PlayerJoinLeaveEvents;
+import plugin.semihardcoreplugin.Events.PlayerAuthMeEvent;
+import plugin.semihardcoreplugin.Events.PlayerDeathRespawnEvent;
+import plugin.semihardcoreplugin.Events.PlayerJoinLeaveEvent;
+import plugin.semihardcoreplugin.Events.PlayerUseHeartsEvent;
 import plugin.semihardcoreplugin.Recipes.HeartRecipe;
 
 public final class SemiHardcorePlugin extends JavaPlugin {
 
     //The events to register
     public void registerEvents() {
-        getServer().getPluginManager().registerEvents(new PlayerHeartEvents(this), this);
+        getServer().getPluginManager().registerEvents(new PlayerDeathRespawnEvent(this), this);
+        getServer().getPluginManager().registerEvents(new PlayerUseHeartsEvent(this), this);
     }
 
     //The commands to register
@@ -22,13 +24,14 @@ public final class SemiHardcorePlugin extends JavaPlugin {
         getCommand("withdraw").setExecutor(new Withdraw(this));
     }
 
+    //Checking if the plugin AuthMe is on the server
     public void checkAuthMe() {
         Plugin authMe = Bukkit.getServer().getPluginManager().getPlugin("AuthMe");
         if (authMe != null) {
             Bukkit.getLogger().info("[Semi-Hardcore] AuthMe plugin found!");
-            getServer().getPluginManager().registerEvents(new PlayerAuthMeEvents(this), this);
+            getServer().getPluginManager().registerEvents(new PlayerAuthMeEvent(this), this);
         } else {
-            getServer().getPluginManager().registerEvents(new PlayerJoinLeaveEvents(this), this);
+            getServer().getPluginManager().registerEvents(new PlayerJoinLeaveEvent(this), this);
         }
     }
 
