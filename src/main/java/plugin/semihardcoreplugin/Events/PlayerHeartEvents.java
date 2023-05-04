@@ -72,8 +72,8 @@ public class PlayerHeartEvents implements Listener {
                 if (safeRespawn) {
                     player.addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION, 2400, 3));
                     player.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 200, 1));
-                    player.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 6000, 1));
-                    player.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 6000, 1));
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 6000, 0));
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 6000, 0));
                 }
                 }, 1L);
         } else {
