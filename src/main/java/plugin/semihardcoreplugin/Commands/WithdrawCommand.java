@@ -45,6 +45,7 @@ public class WithdrawCommand implements CommandExecutor, TabCompleter {
         String invalid = "§cPlease enter a valid number!";
         String notZero = "§cPlease enter a number greater than 0!";
         String noHearts = "§cYou don't have enough hearts to withdraw!";
+        String fullHealth = "§cYou need to have full health first before you can withdraw!";
 
         //Checking if it's possible to use the command
         if (!command.getName().equalsIgnoreCase("withdraw")) return false;
@@ -75,8 +76,12 @@ public class WithdrawCommand implements CommandExecutor, TabCompleter {
         Location playerLocation = player.getLocation();
         World world = player.getWorld();
         double maxHealthValue = maxHealth != null ? maxHealth.getBaseValue() : 0;
+        double health = player.getHealth();
         int maxHealthIntValue = (int) maxHealthValue;
         if (maxHealthIntValue > 2 && (numHearts * 2) < maxHealthIntValue) {
+            //Checking if health is not full
+            if (health != maxHealthValue) { sender.sendMessage(fullHealth); return true; }
+
             //Checking if the inventory of the player is full
             if (player.getInventory().firstEmpty() == -1) world.dropItemNaturally(playerLocation, result);
             else player.getInventory().addItem(result);

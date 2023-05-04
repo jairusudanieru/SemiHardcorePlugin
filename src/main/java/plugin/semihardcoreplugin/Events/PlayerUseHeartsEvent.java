@@ -39,7 +39,7 @@ public class PlayerUseHeartsEvent implements Listener {
         //Checking if the item is the correct item
         if (actionType && itemRight && meta.hasEnchant(Enchantment.DURABILITY)) {
             AttributeInstance maxHealth = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
-            //Checking if the player have less than 20 hearts, if the player does, it won't allow to add more
+            //Checking if the player have enough hearts
             if (maxHealth != null && maxHealth.getBaseValue() < (maxHeart*2)) {
                 double newValue = maxHealth.getBaseValue() + 2;
                 maxHealth.setBaseValue(newValue);
