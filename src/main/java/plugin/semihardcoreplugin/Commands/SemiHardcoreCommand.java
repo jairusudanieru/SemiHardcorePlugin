@@ -8,10 +8,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class ReloadCommand implements CommandExecutor, TabCompleter {
+public class SemiHardcoreCommand implements CommandExecutor, TabCompleter {
 
     private final JavaPlugin plugin;
-    public ReloadCommand(JavaPlugin plugin) {
+    public SemiHardcoreCommand(JavaPlugin plugin) {
         this.plugin = plugin;
     }
 

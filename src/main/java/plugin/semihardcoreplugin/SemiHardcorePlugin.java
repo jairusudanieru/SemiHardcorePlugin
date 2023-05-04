@@ -14,9 +14,9 @@ public final class SemiHardcorePlugin extends JavaPlugin {
 
     //The commands to register
     public void registerCommands() {
-        getCommand("semihardcore").setExecutor(new ReloadCommand(this));
-        getCommand("revive").setExecutor(new ReviveCommand(this));
-        getCommand("withdraw").setExecutor(new WithdrawCommand(this));
+        Bukkit.getPluginCommand("revive").setExecutor(new ReviveCommand(this));
+        Bukkit.getPluginCommand("semihardcore").setExecutor(new SemiHardcoreCommand(this));
+        Bukkit.getPluginCommand("withdraw").setExecutor(new WithdrawCommand(this));
     }
 
     //The events to register

@@ -43,7 +43,6 @@ public class PlayerUseHeartsEvent implements Listener {
             if (maxHealth != null && maxHealth.getBaseValue() < (maxHeart*2)) {
                 double newValue = maxHealth.getBaseValue() + 2;
                 maxHealth.setBaseValue(newValue);
-                player.setHealth(newValue);
                 player.getInventory().getItemInMainHand().setAmount(player.getInventory().getItemInMainHand().getAmount() - 1);
                 player.spawnParticle(Particle.HEART, player.getLocation(), 30);
                 player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1f, 1f);
