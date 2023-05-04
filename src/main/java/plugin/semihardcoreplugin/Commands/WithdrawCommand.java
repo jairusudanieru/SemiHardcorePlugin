@@ -41,7 +41,7 @@ public class WithdrawCommand implements CommandExecutor, TabCompleter {
         //Messages variables
         String playerOnly = "This command is for players only!";
         String specify = "§cPlease specify the number of hearts you want to withdraw!";
-        String usage = "Usage: /withdrawheart <number of hearts>";
+        String usage = "§7Usage: /withdrawheart <number of hearts>";
         String invalid = "§cPlease enter a valid number!";
         String notZero = "§cPlease enter a number greater than 0!";
         String noHearts = "§cYou don't have enough hearts to withdraw!";

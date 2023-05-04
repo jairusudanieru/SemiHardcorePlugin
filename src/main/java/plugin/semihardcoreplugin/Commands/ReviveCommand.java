@@ -41,8 +41,8 @@ public class ReviveCommand implements CommandExecutor, TabCompleter {
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
         //Messages variables
         String specify = "Please specify a player you want to revive!";
-        String usage = "Usage: /revive <playername>";
-        String usagePl = "Usage: /revive";
+        String usage = "§7Usage: /revive <playername>";
+        String usagePl = "§7Usage: /revive";
         String cantFind = "§cCan't find that player!";
         String revSuccess = "§aYou have been successfully revived!";
         String cantRev = "§cYou can't revive this player because they're not eliminated!";

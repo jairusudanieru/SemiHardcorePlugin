@@ -40,9 +40,10 @@ public class SemiHardcoreCommand implements CommandExecutor, TabCompleter {
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
         //Message variables
         String noPerms = "§cSorry, you don't have permission to use this command!";
-        String usage = "Usage: /semihardcore (reload|info|creator)";
-        String reloaded = "§e[Semi-Hardcore] Configuration successfully reloaded!";
-        String info = "This is a simple plugin that adds a twist to Hardcore mode Minecraft servers.";
+        String usage = "§7Usage: /semihardcore (info|creator)";
+        String usageOp = "§7Usage: /semihardcore (reload|info|creator)";
+        String reloaded = "§eConfiguration successfully reloaded!";
+        String info = "§e[Semi-Hardcore] This is a simple plugin that adds a twist to Hardcore mode Minecraft servers.";
         String creator = "§eJairusu#5237 is the creator of this plugin!";
 
         //Checking if it's possible to use the command
@@ -65,7 +66,8 @@ public class SemiHardcoreCommand implements CommandExecutor, TabCompleter {
         } else if (choice.equals("creator")) {
             sender.sendMessage(creator);
         } else {
-            sender.sendMessage(usage);
+            if (isOperator) sender.sendMessage(usageOp);
+            else sender.sendMessage(usage);
         }
         return true;
     }
