@@ -1,4 +1,4 @@
-# Semi-Hardcore Mode Plugin
+# Semi-Hardcore Mode Plugin (OLD)
 
 This is a simple plugin that adds a twist to 
 Hardcore mode Minecraft servers. Inspired by 
